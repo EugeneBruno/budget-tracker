@@ -150,4 +150,131 @@ If everything is set correctly, your app is now connected to the backend 🎉
 
 ---
 
+---
+
+## ✅ Step 3 — Create Database Tables (Supabase)
+
+### 1️⃣ Open Supabase Dashboard
+
+* Go to your project
+* Click **Table Editor** (left sidebar)
+
+---
+
+### 2️⃣ Create Tables Visually
+
+#### 🧍 Table 1 — users
+
+Click **Create a new table**
+
+Table name:
+
+```
+users
+```
+
+Add columns:
+
+| Name       | Type               |
+| ---------- | ------------------ |
+| id         | uuid (Primary Key) |
+| email      | text               |
+| full_name  | text               |
+| currency   | text               |
+| created_at | timestamp          |
+
+Click **Save**
+
+---
+
+#### 💳 Table 2 — transactions
+
+Click **Create a new table**
+
+Table name:
+
+```
+transactions
+```
+
+Add columns:
+
+| Name        | Type               |
+| ----------- | ------------------ |
+| id          | uuid (Primary Key) |
+| user_id     | uuid               |
+| type        | text               |
+| amount      | integer            |
+| category_id | uuid               |
+| description | text               |
+| date        | date               |
+| created_at  | timestamp          |
+
+Click **Save**
+
+---
+
+#### 🗂 Table 3 — categories
+
+Click **Create a new table**
+
+Table name:
+
+```
+categories
+```
+
+Add columns:
+
+| Name       | Type               |
+| ---------- | ------------------ |
+| id         | uuid (Primary Key) |
+| name       | text               |
+| type       | text               |
+| user_id    | uuid (nullable)    |
+| created_at | timestamp          |
+
+Click **Save**
+
+---
+
+### 3️⃣ (Optional) SQL Version — Copy & Run
+
+Go to **SQL Editor → New query** and run:
+
+```sql
+create table users (
+  id uuid primary key,
+  email text,
+  full_name text,
+  currency text,
+  created_at timestamp default now()
+);
+
+create table categories (
+  id uuid primary key,
+  name text,
+  type text,
+  user_id uuid,
+  created_at timestamp default now()
+);
+
+create table transactions (
+  id uuid primary key,
+  user_id uuid,
+  type text,
+  amount integer,
+  category_id uuid,
+  description text,
+  date date,
+  created_at timestamp default now()
+);
+```
+
+---
+
+If successful, your database foundation is ready 🎉
+
+---
+
 *(Next steps will be added after class.)*
