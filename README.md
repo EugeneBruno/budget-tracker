@@ -190,7 +190,131 @@ Create page:
 src/app/signup/page.js
 ```
 
-(See lesson for full code.)
+Add:
+
+```javascript
+'use client'
+
+import { useState } from 'react'
+import { supabase } from '@/lib/supabase'
+
+export default function Signup() {
+  const [fullName, setFullName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  async function handleSignup(e) {
+    e.preventDefault()
+
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password
+    })
+
+    if (error) {
+      alert(error.message)
+      return
+    }
+
+    const user = data.user
+
+    if (user) {
+      await supabase.from('users').insert([
+        {
+          id: user.id,
+          email,
+          full_name: fullName
+        }
+      ])
+    }
+
+    alert('Account created successfully!')
+  }
+
+  return (
+    <form onSubmit={handleSignup}>
+      <input
+        placeholder="Full Name"
+        value={fullName}
+        onChange={(e) => setFullName(e.target.value)}
+      />
+
+      <input
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+
+      <button>Sign Up</button>
+    </form>
+  )
+}
+```
+
+---
+
+## ✅ Step 4 — Authentication (Login)
+
+Create page:
+
+```
+src/app/login/page.js
+```
+
+Add:
+
+```javascript
+'use client'
+
+import { useState } from 'react'
+import { supabase } from '@/lib/supabase'
+
+export default function Login() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  async function handleLogin(e) {
+    e.preventDefault()
+
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    })
+
+    if (error) {
+      alert(error.message)
+    } else {
+      alert('Login successful!')
+    }
+  }
+
+  return (
+    <form onSubmit={handleLogin}>
+      <input
+        placeholder="Email"
+        value={email}
+        onChange={(e)=>setEmail(e.target.value)}
+      />
+
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e)=>setPassword(e.target.value)}
+      />
+
+      <button>Login</button>
+    </form>
+  )
+}
+```
 
 ---
 
