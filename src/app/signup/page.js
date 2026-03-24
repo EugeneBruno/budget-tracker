@@ -49,7 +49,7 @@ export default function Signup() {
     //This is the user interface to collect the users infor
     //Note: No styling has been added to this form
     return (
-  <div className="bg-red-500 min-h-screen flex items-center justify-center">
+  <div className="flex items-center justify-center min-h-screen bg-gray-100">
     
     <form 
       onSubmit={handleSignup}
