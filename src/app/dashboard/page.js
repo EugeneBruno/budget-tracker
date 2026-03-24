@@ -1,19 +1,32 @@
 'use client'
 
-import { useUser } from '@/hooks/useUser';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import useUser from '@/hooks/useUser'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 export default function Dashboard() {
-    const user = useUser();
-    const router = useRouter();     
+  const user = useUser()
+  const router = useRouter()
 
-    useEffect(() => {
-        // if the user is not logged in, redirect to the login page
-        if (user === null) {
-            router.push('/login');
-        }   
-    }, [user])
+  useEffect(() => {
+    //only redirect AFTER we know the result
+    if (user === false) {
+      router.push('/login')
+    }
+  }, [user])
 
-    return <h1>Welcome to your Dashboard, {user?.email}!</h1>
+  //show loading while checking
+  if (user === undefined) {
+    return <p>Loading...</p>
+  }
+
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-md text-center">
+        <h1 className="text-2xl font-bold">
+          This is your dashboard
+        </h1>
+      </div>
+    </div>
+  )
 }
